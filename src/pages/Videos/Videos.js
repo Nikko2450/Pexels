@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Container } from "../../components/Container/Container";
 import { Search } from "../../components/Search/Search";
 import { Select } from "../../components/Select/Select";
+import { Card } from "../../components/Card/Сard";
 
 const url = "https://api.pexels.com/videos";
 
-export const Video = () => {
+export const Videos = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState([]);
   const [filterList, setFilteredList] = useState({
@@ -60,19 +61,36 @@ export const Video = () => {
   }, []);
 
   return (
-    <div className="video">
+    <div className="videos">
       <Container>
-        <div className="video__wrapper">
-          <Search placeholder="Search Video" />
-          <Select options={["landscape", "portrait", "square"]} />
-          <Select options={["large(24MP)", "medium(12MP)", "small(4MP)"]} />
+        <div className="videos__wrapper">
+          <Search
+            placeholder="Search Video"
+            onChange={(value) =>
+              setFilteredList((obj) => ({ ...obj, video: value }))
+            }
+          />
+          <Select
+            options={["landscape", "portrait", "square"]}
+            onChange={(value) =>
+              setFilteredList((obj) => ({ ...obj, orientation: value }))
+            }
+          />
+          <Select
+            options={["large", "medium", "small"]}
+            onChange={(value) =>
+              setFilteredList((obj) => ({ ...obj, size: value }))
+            }
+          />
         </div>
-        <div className="video__content">
-          {data
-            ? data.videos.map((value) => {
-                return value;
-              })
-            : null}
+        <div className="videos__content">
+          {data ? (
+            data.videos.map((value) => {
+              return <Card src={value.image} key={value.id} />;
+            })
+          ) : (
+            <p className="videos__desc">No photo found</p>
+          )}
         </div>
       </Container>
     </div>

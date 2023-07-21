@@ -1,48 +1,16 @@
-import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Container } from "../../components/Container/Container";
-import { Search } from "../../components/Search/Search";
-import { Select } from "../../components/Select/Select";
-import { Card } from "../../components/Card/Сard";
+import { useEffect, useState } from "react";
 
-const url = "https://api.pexels.com/v1";
+const url = "https://api.pexels.com/v1/photos/";
 
 export const Photo = () => {
+  const { id } = useParams();
   const [data, setData] = useState(null);
   const [error, setError] = useState([]);
-  const [filterList, setFilteredList] = useState({
-    image: "",
-    orientation: "",
-    size: "",
-  });
 
   useEffect(() => {
-    if (filterList.image && (filterList.orientation || filterList.size)) {
-      console.log(filterList);
-      fetch(
-        `${url}/search?query=${filterList.image}&orientation=${filterList.orientation}&size=${filterList.size}&page=1&per_page=16`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: process.env.REACT_APP_API_KEY,
-          },
-        }
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((value) => {
-          setData(value);
-        })
-        .catch((message) => {
-          setError(message);
-        });
-    }
-  }, [filterList]);
-
-  useEffect(() => {
-    fetch(`${url}/curated?page=1&per_page=16`, {
+    fetch(`${url}${id}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -64,35 +32,53 @@ export const Photo = () => {
   return (
     <div className="photo">
       <Container>
-        <div className="photo__wrapper">
-          <Search
-            placeholder="Search photo"
-            onChange={(value) =>
-              setFilteredList((obj) => ({ ...obj, image: value }))
-            }
-          />
-          <Select
-            options={["landscape", "portrait", "square"]}
-            onChange={(value) =>
-              setFilteredList((obj) => ({ ...obj, orientation: value }))
-            }
-          />
-          <Select
-            options={["large", "medium", "small"]}
-            onChange={(value) =>
-              setFilteredList((obj) => ({ ...obj, size: value }))
-            }
-          />
-        </div>
-        <div className="photo__content">
-          {data ? (
-            data.photos.map((value) => {
-              return <Card src={value.src.large} alt={value.alt} />;
-            })
-          ) : (
-            <p>No photo found</p>
-          )}
-        </div>
+        {data && (
+          <>
+            {data.alt && <h1 className="photo__title">{data.alt}</h1>}
+            <div className="photo__wrapper">
+              <div className="photo__wrapper-img">
+                <img
+                  className="photo__img"
+                  src={data.src.large}
+                  alt={data.alt}
+                />
+              </div>
+              <div>
+                <div className="photo__links-wrapper">
+                  <a className="photo__links" href={data.url} target="_blank">
+                    <div className="photo__link paragraph">Link to photo</div>
+                  </a>
+                  <a
+                    className="photo__links"
+                    href={data.photographer_url}
+                    target="_blank"
+                  >
+                    <div className="photo__link paragraph">
+                      Link to the photographer
+                    </div>
+                  </a>
+                </div>
+                <ul className="photo__list">
+                  <li className="photo__info">
+                    <p className="photo__photographer paragraph">
+                      Photographer: <span>{data.photographer}</span>
+                    </p>
+                  </li>
+
+                  <li className="photo__info">
+                    <p className="photo__desc paragraph">
+                      Average color intensity
+                    </p>
+                    <span
+                      className="photo__avg"
+                      style={{ backgroundColor: data.avg_color }}
+                    ></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </>
+        )}
       </Container>
     </div>
   );

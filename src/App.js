@@ -1,8 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.sass";
 import { Home } from "./pages/Home/Home";
+import { Photos } from "./pages/Photos/Photos";
+import { Videos } from "./pages/Videos/Videos";
 import { Photo } from "./pages/Photo/Photo";
-import { Video } from "./pages/Video/Video";
 
 function App() {
   const routes = createBrowserRouter([
@@ -11,12 +12,16 @@ function App() {
       element: <Home />,
     },
     {
-      path: "/photo",
-      element: <Photo />,
+      path: "/photos",
+      element: <Photos />,
     },
     {
-      path: "/video",
-      element: <Video />,
+      path: "/videos",
+      element: <Videos />,
+    },
+    {
+      path: "/photo/:id",
+      element: <Photo />,
     },
   ]);
 
