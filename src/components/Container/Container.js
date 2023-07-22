@@ -1,3 +1,10 @@
+import { useRef } from "react";
+
 export const Container = ({ children }) => {
-  return <div className="container">{children}</div>;
+  const elementRef = useRef();
+  return (
+    <div className="container" ref={elementRef}>
+      {children}
+    </div>
+  );
 };

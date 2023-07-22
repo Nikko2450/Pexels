@@ -46,35 +46,30 @@ export const Photo = () => {
               <div>
                 <div className="photo__links-wrapper">
                   <a className="photo__links" href={data.url} target="_blank">
-                    <div className="photo__link paragraph">Link to photo</div>
+                    <div className="photo__link">Link to photo</div>
                   </a>
                   <a
                     className="photo__links"
                     href={data.photographer_url}
                     target="_blank"
                   >
-                    <div className="photo__link paragraph">
-                      Link to the photographer
-                    </div>
+                    <div className="photo__link">Link to the photographer</div>
                   </a>
                 </div>
-                <ul className="photo__list">
-                  <li className="photo__info">
-                    <p className="photo__photographer paragraph">
-                      Photographer: <span>{data.photographer}</span>
-                    </p>
-                  </li>
-
-                  <li className="photo__info">
+                <div className="photo__text">
+                  <p className="photo__photographer paragraph">
+                    Photographer: <span>{data.photographer}</span>
+                  </p>
+                  <div className="photo__wrapper-avg">
                     <p className="photo__desc paragraph">
-                      Average color intensity
+                      Average color intensity:
                     </p>
                     <span
                       className="photo__avg"
                       style={{ backgroundColor: data.avg_color }}
                     ></span>
-                  </li>
-                </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </>

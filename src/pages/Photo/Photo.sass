@@ -1,8 +1,7 @@
 .photo
   $this: &
   padding-top: 30px
-  background: hsl(0, 0%, 5%)
-  height: 100vh
+  height: 100%
 
   &__title
     color: $c-white
@@ -41,6 +40,11 @@
     transition: transform 0.2s
     border: 2px solid $c-white
 
+  &__wrapper-avg
+    border: 5px solid white
+    padding: 20px
+    border-radius: 30px
+
   &__avg
     display: block
     margin: 0 auto
@@ -50,10 +54,8 @@
     border: 3px solid $c-white
     margin-top: 20px
 
-  &__info
-
-    &:not(:last-of-type)
-      margin-bottom: 30px
+  &__photographer
+    margin-bottom: 30px
 
   &__links-wrapper
     display: flex
@@ -85,6 +87,12 @@
     transition: transform 0.2s
     border: 2px solid $c-white
     padding: 5px 10px
+    color: $c-white
+    font-family: Montserrat
+    font-weight: 500
+    line-height: normal
+    font-size: 20px
+    text-align: center
 
 .paragraph
   color: $c-white

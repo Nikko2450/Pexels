@@ -4,6 +4,7 @@ import { Home } from "./pages/Home/Home";
 import { Photos } from "./pages/Photos/Photos";
 import { Videos } from "./pages/Videos/Videos";
 import { Photo } from "./pages/Photo/Photo";
+import { Video } from "./pages/Video/Video";
 
 function App() {
   const routes = createBrowserRouter([
@@ -22,6 +23,10 @@ function App() {
     {
       path: "/photo/:id",
       element: <Photo />,
+    },
+    {
+      path: "/video/:id",
+      element: <Video />,
     },
   ]);
 

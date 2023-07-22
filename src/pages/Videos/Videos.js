@@ -86,7 +86,13 @@ export const Videos = () => {
         <div className="videos__content">
           {data ? (
             data.videos.map((value) => {
-              return <Card src={value.image} key={value.id} />;
+              return (
+                <Card
+                  src={value.image}
+                  key={value.id}
+                  href={`/video/${value.id}`}
+                />
+              );
             })
           ) : (
             <p className="videos__desc">No photo found</p>
