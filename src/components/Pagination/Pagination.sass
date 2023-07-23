@@ -1,0 +1,56 @@
+.pagination
+  display: flex
+  align-items: center
+  justify-content: center
+  gap: 5px
+  margin-top: 25px
+
+  &__button
+    width: 32px
+    height: 32px
+    display: flex
+    justify-content: center
+    align-items: center
+    color: $c-white
+    font-family: Open Sans
+    font-size: 15px
+    font-weight: 600
+    line-height: normal
+    text-align: center
+    background-color: $c-black
+    border: 1px solid $c-white
+    border-radius: 8px
+    transition: background-color .3s ease
+
+    &:hover
+      background-color: $c-dusty-gray
+
+  &__text
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 32px
+    height: 32px
+    color: $c-white
+    font-family: Open Sans
+    font-size: 15px
+    font-weight: 600
+    line-height: normal
+    text-align: center
+    background-color: $c-black
+    border: 1px solid $c-white
+    border-radius: 8px
+    padding: 10px 15px
+
+.active
+  color: $c-black
+  background-color: $c-white
+
+  &:hover
+    background-color: $c-white
+
+.disabled
+  opacity: 40%
+  
+  &:hover
+    background-color: $c-black

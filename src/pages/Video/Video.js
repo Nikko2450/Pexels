@@ -51,7 +51,7 @@ export const Video = () => {
     return () => {
       window.removeEventListener("resize", updateContainerWidth);
     };
-  }, []);
+  }, [containerRef.current]);
 
   return (
     <div className="video">
@@ -60,17 +60,17 @@ export const Video = () => {
           <div className="video__wrapper">
             <div className="video__wrapper-play" ref={containerRef}>
               <iframe
-                width={containerWidth}
-                height={"100%"}
+                width={Math.min(data.video_files[0].width, containerWidth)}
+                height={
+                  (data.video_files[0].height / data.video_files[0].width) *
+                  Math.min(data.video_files[0].width, containerWidth)
+                }
                 className="video__play"
-                src={data.video_files[2].link}
+                src={data.video_files[0].link}
                 allow="autoplay"
-                frameborder="0"
               ></iframe>
             </div>
-            <h2 className="video__user">
-              <span>{data.user.name}</span>
-            </h2>
+            <h2 className="video__user">{data.user.name}</h2>
             <div className="video__user-links">
               <a
                 className="video__user-link"
@@ -80,6 +80,9 @@ export const Video = () => {
                 User link
               </a>
             </div>
+            <p className="video__quality">
+              Video quality: <span>'{data.video_files[0].quality}'</span>
+            </p>
           </div>
         )}
       </Container>

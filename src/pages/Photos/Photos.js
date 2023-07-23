@@ -3,6 +3,7 @@ import { Container } from "../../components/Container/Container";
 import { Search } from "../../components/Search/Search";
 import { Select } from "../../components/Select/Select";
 import { Card } from "../../components/Card/Сard";
+import { Pagination } from "../../components/Pagination/Pagination";
 
 const url = "https://api.pexels.com/v1";
 
@@ -14,12 +15,17 @@ export const Photos = () => {
     orientation: "",
     size: "",
   });
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    if (filterList.image && (filterList.orientation || filterList.size)) {
-      console.log(filterList);
+    if (
+      filterList.image ||
+      (filterList.orientation && filterList.image) ||
+      (filterList.size && filterList.image)
+    ) {
       fetch(
-        `${url}/search?query=${filterList.image}&orientation=${filterList.orientation}&size=${filterList.size}&page=1&per_page=16`,
+        `${url}/search?query=${filterList.image}&orientation=${filterList.orientation}&size=${filterList.size}&page=${currentPage}&per_page=16`,
         {
           method: "GET",
           headers: {
@@ -33,33 +39,37 @@ export const Photos = () => {
           return response.json();
         })
         .then((value) => {
+          setTotalPages(Math.ceil(value.total_results / value.per_page));
           setData(value);
         })
         .catch((message) => {
           setError(message);
         });
     }
-  }, [filterList]);
+  }, [filterList, currentPage]);
 
   useEffect(() => {
-    fetch(`${url}/curated?page=1&per_page=16`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: process.env.REACT_APP_API_KEY,
-      },
-    })
-      .then((response) => {
-        return response.json();
+    if (filterList.image === "") {
+      fetch(`${url}/curated?page=${currentPage}&per_page=16`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: process.env.REACT_APP_API_KEY,
+        },
       })
-      .then((value) => {
-        setData(value);
-      })
-      .catch((message) => {
-        setError(message);
-      });
-  }, []);
+        .then((response) => {
+          return response.json();
+        })
+        .then((value) => {
+          setTotalPages(Math.ceil(value.total_results / value.per_page));
+          setData(value);
+        })
+        .catch((message) => {
+          setError(message);
+        });
+    }
+  }, [currentPage]);
 
   return (
     <div className="photos">
@@ -100,6 +110,12 @@ export const Photos = () => {
             <p className="photos__desc">No photo found</p>
           )}
         </div>
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        )}
       </Container>
     </div>
   );
