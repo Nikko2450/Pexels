@@ -17,6 +17,16 @@
     align-items: center
     margin-top: 50px
 
+    @media (max-width: $xs)
+      display: block
+      
+  &__link
+
+    @media (max-width: $xs)
+      &:not(:last-of-type)
+        margin-bottom: 25px
+        
+
   &__subtitle
     color: $c-white
     font-family: Montserrat
@@ -24,6 +34,9 @@
     font-weight: 500
     line-height: normal
     margin-bottom: 30px
+
+    @media (max-width: $xs)
+      text-align: center
 
   &__photos
     color: $c-eucalyptus

@@ -11,6 +11,9 @@
     font-size: 50px
     text-align: center
 
+    @media (max-width: $xs)
+      font-size: 30px
+
   &__wrapper
     display: flex
     justify-content: space-around
@@ -18,10 +21,17 @@
     margin-top: 50px
     gap: 30px
 
+    @media (max-width: $sm)
+      display: grid
+      justify-content: center
+      
   &__wrapper-img
     width: 50%
     position: relative
     margin-top: 5px
+
+    @media (max-width: $sm)
+      width: 100%
 
     &::before
       content: ""
@@ -45,6 +55,9 @@
     padding: 20px
     border-radius: 30px
 
+    @media (max-width: $xs)
+      padding: 10px
+      
   &__avg
     display: block
     margin: 0 auto
@@ -61,6 +74,9 @@
     display: flex
     gap: 25px
     margin-bottom: 20px
+
+    @media (max-width: $xs)
+      justify-content: center
 
   &__links
     position: relative
@@ -94,6 +110,9 @@
     font-size: 20px
     text-align: center
 
+    @media (max-width: $xs)
+      font-size: 10px
+
 .paragraph
   color: $c-white
   font-family: Montserrat
@@ -101,3 +120,6 @@
   line-height: normal
   font-size: 30px
   text-align: center
+
+  @media (max-width: $xs)
+    font-size: 25px
