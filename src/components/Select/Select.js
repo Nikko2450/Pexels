@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const Select = ({ options, onChange }) => {
+export const Select = ({ options, onChange, name }) => {
   const [selectedValue, setSelectValue] = useState("placeholder");
 
   const handleValueChange = (event) => {
@@ -16,7 +16,7 @@ export const Select = ({ options, onChange }) => {
         onChange={handleValueChange}
       >
         <option disabled hidden value="placeholder">
-          Choose an orientation
+          {name}
         </option>
         {options.map((item) => (
           <option key={item} className="select__element" value={item}>

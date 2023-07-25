@@ -82,12 +82,14 @@ export const Photos = () => {
             }
           />
           <Select
+            name="Choose an orientation"
             options={["landscape", "portrait", "square"]}
             onChange={(value) =>
               setFilteredList((obj) => ({ ...obj, orientation: value }))
             }
           />
           <Select
+            name="Image size"
             options={["large", "medium", "small"]}
             onChange={(value) =>
               setFilteredList((obj) => ({ ...obj, size: value }))
@@ -95,7 +97,7 @@ export const Photos = () => {
           />
         </div>
         <div className="photos__content">
-          {data ? (
+          {data && data.photos.length > 0 ? (
             data.photos.map((value) => {
               return (
                 <Card

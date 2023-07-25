@@ -82,12 +82,14 @@ export const Videos = () => {
             }
           />
           <Select
+            name="Choose an orientation"
             options={["landscape", "portrait", "square"]}
             onChange={(value) =>
               setFilteredList((obj) => ({ ...obj, orientation: value }))
             }
           />
           <Select
+            name="Video size"
             options={["large", "medium", "small"]}
             onChange={(value) =>
               setFilteredList((obj) => ({ ...obj, size: value }))
@@ -95,7 +97,7 @@ export const Videos = () => {
           />
         </div>
         <div className="videos__content">
-          {data ? (
+          {data && data.videos.length > 0 ? (
             data.videos.map((value) => {
               return (
                 <Card
