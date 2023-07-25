@@ -19,6 +19,19 @@ export const Photos = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    const checkAndAddScrollbar = () => {
+      const hasScrollbar = document.body.scrollHeight > window.innerHeight;
+      if (hasScrollbar) {
+        document.body.style.paddingRight = "0";
+      } else {
+        document.body.style.paddingRight = "16px";
+      }
+    };
+
+    checkAndAddScrollbar();
+  }, [data]);
+
+  useEffect(() => {
     if (
       filterList.image ||
       (filterList.orientation && filterList.image) ||
@@ -69,7 +82,7 @@ export const Photos = () => {
           setError(message);
         });
     }
-  }, [currentPage]);
+  }, [currentPage, filterList]);
 
   return (
     <div className="photos">
@@ -89,7 +102,7 @@ export const Photos = () => {
             }
           />
           <Select
-            name="Image size"
+            name="Choose an image size"
             options={["large", "medium", "small"]}
             onChange={(value) =>
               setFilteredList((obj) => ({ ...obj, size: value }))

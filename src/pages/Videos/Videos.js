@@ -19,6 +19,19 @@ export const Videos = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    const checkAndAddScrollbar = () => {
+      const hasScrollbar = document.body.scrollHeight > window.innerHeight;
+      if (hasScrollbar) {
+        document.body.style.paddingRight = "0";
+      } else {
+        document.body.style.paddingRight = "16px";
+      }
+    };
+
+    checkAndAddScrollbar();
+  }, [data]);
+
+  useEffect(() => {
     if (
       filterList.video ||
       (filterList.orientation && filterList.video) ||
@@ -69,7 +82,7 @@ export const Videos = () => {
           setError(message);
         });
     }
-  }, [currentPage]);
+  }, [currentPage, filterList]);
 
   return (
     <div className="videos">
@@ -89,7 +102,7 @@ export const Videos = () => {
             }
           />
           <Select
-            name="Video size"
+            name="Choose an video size"
             options={["large", "medium", "small"]}
             onChange={(value) =>
               setFilteredList((obj) => ({ ...obj, size: value }))
@@ -98,15 +111,17 @@ export const Videos = () => {
         </div>
         <div className="videos__content">
           {data && data.videos.length > 0 ? (
-            data.videos.map((value) => {
-              return (
-                <Card
-                  src={value.image}
-                  key={value.id}
-                  href={`/video/${value.id}`}
-                />
-              );
-            })
+            (document.body.style.paddingRight =
+              "0" &&
+              data.videos.map((value) => {
+                return (
+                  <Card
+                    src={value.image}
+                    key={value.id}
+                    href={`/video/${value.id}`}
+                  />
+                );
+              }))
           ) : (
             <p className="videos__desc">No photo found</p>
           )}
